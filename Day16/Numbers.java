@@ -7,6 +7,10 @@ public class Numbers {
         takingANumber();
     }
 
+    // start moet kleiner zijn dan eind
+    // input moet naar integer > try/catch om ook string input etc op te vangen > niet nextInt maar next line oid?
+    
+
     public static void takingANumber() {
         Scanner prepAskNumber = new Scanner(System.in);
         System.out.println("please provide text\t:");

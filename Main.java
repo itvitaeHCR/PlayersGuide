@@ -1,6 +1,5 @@
 import Day18.BossBattle;
 
-import javax.crypto.Cipher;
 import java.util.Scanner;
 
 public class Main {

@@ -23,7 +23,18 @@ public class BossBattle {
     public static void bossBattling(int ManticoreHP, int ConsolasHP, int round) {
         currentStatus(ManticoreHP, ConsolasHP, round);
         int ManticoreRange = Numbers.askForNumber("Player 1, how far away from the city do you want to station the Manticore?\t:", 0, 100);
-        guessingTheDistance(ManticoreRange, ManticoreHP, ConsolasHP, round);
+        stillAlive(ManticoreRange, ManticoreHP, ConsolasHP, round);
+    }
+
+
+    public static void stillAlive(int ManticoreRange, int ManticoreHP, int ConsolasHP, int round) {
+        if (ManticoreHP == 0) {
+            System.out.println("Yay! The Manticore has been slain!");
+        } else if (ConsolasHP == 0) {
+            System.out.println("uh oh.. this wasn't supposed to happen! The city of Consolas has been razed");
+        } else {
+            guessingTheDistance(ManticoreRange, ManticoreHP, ConsolasHP, round);
+        }
     }
 
     public static void currentStatus(int ManticoreHP, int ConsolasHP, int round) {
@@ -36,6 +47,7 @@ public class BossBattle {
 
     // make function that calls this function IF neither HP's are zero (or below)
     public static void guessingTheDistance(int ManticoreRange, int ManticoreHP, int ConsolasHP, int round) {
+        int damage = calculatingDamage(round);
         // input estimate
         Scanner aims = new Scanner(System.in);
         System.out.println("Where will you aim the cannon?\t:");
@@ -43,13 +55,36 @@ public class BossBattle {
         if (aim < ManticoreRange) {
             System.out.println("uh oh.. " + aim + " fell short.");
             // handle result here: change C-HP; round +=1; call (parent-)function again
+
         } else if (aim > ManticoreRange) {
             System.out.println("uh oh.. " + aim + " overshot.");
             // handle result here: change C-HP; round +=1; call (parent-)function again
+
         } else {
             System.out.println("well done! " + aim + " was right on target!");
             // handle result here: change C-hp and M-hp (damage dep on round); round +=1; call (parent-)function again
+
         }
+    }
+
+    // change this function to return (int) damage type and number regardless, and only subtract when the cannon hits
+    private static int calculatingDamage(int round) {
+        int damageDealing;
+        if (round % 3 == 0 && round % 5 == 0) {
+            System.out.println("\u001B[34m" + "Combo Blast!" + "\u001B[0m");
+            damageDealing = 10;
+        } else if (round % 3 == 0) {
+            System.out.println("\u001B[33m" + "Fire Blast!" + "\u001B[0m");
+            damageDealing = 3;
+        } else if (round % 5 == 0) {
+            System.out.println("\u001B[31m" + "Electric Blast!" + "\u001B[0m");
+            damageDealing = 3;
+        } else {
+            System.out.println("Regular Boom!");
+            damageDealing = 1;
+        }
+        System.out.println("this round's charge would do " + damageDealing + " damage if it hit!");
+        return damageDealing;
     }
 
 }
